@@ -64,7 +64,6 @@ class CustomTabBar extends StatelessWidget {
     "الطائرة",
     "الكره",
     "ملفي",
-    "الاشتراكات",
   ];
 
   final List<IconData> icons = const [
@@ -73,7 +72,6 @@ class CustomTabBar extends StatelessWidget {
     Icons.flight_takeoff,
     Icons.sports_basketball,
     Icons.person_outline_rounded,
-    Icons.subscriptions,
   ];
 
   @override

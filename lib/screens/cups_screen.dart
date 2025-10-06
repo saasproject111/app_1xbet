@@ -127,12 +127,12 @@ class _CupsScreenState extends State<CupsScreen> with TickerProviderStateMixin {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       const Text(
-                        '🎯',
+                        '',
                         style: TextStyle(fontSize: 24),
                       ),
                       const SizedBox(width: 10),
                       const Text(
-                        'توقع الكره',
+                        'توقع مكان الكرة',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 24,

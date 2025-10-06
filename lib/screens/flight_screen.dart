@@ -242,7 +242,7 @@ class _FlightScreenState extends State<FlightScreen> with TickerProviderStateMix
                   centerTitle: true,
                   titlePadding: const EdgeInsets.only(bottom: 16),
                   title: const Text(
-                    'توقع الانفجار',
+                    'توقـع الانفجـار',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 22,
