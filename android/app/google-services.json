@@ -50,11 +50,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "61102249759-h8o0peqcip34r2q67qftkvdn3tos0rgl.apps.googleusercontent.com",
+          "client_id": "61102249759-rh9eg7tf84pbc0hppe8nancsnljjq9on.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.app_1xbetttt",
-            "certificate_hash": "7f6a8df398042737f94db2118a443bb410ecc640"
+            "certificate_hash": "823d1f9e82710fac3ae79615055c84457c2fee75"
           }
         },
         {
