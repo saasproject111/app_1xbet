@@ -1,16 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-// ==================================================================
-// ** 1. تعريف الألوان الجديدة لتطابق الصورة المرفقة **
-// ==================================================================
-
-// لون خلفية الصفحة الداكن
-const Color darkBackgroundColor = Color(0xFF1E2129); 
-// لون أغمق لخلفية شريط التنقل العائم
-const Color darkAppBarColor = Color(0xFF121418); 
-// اللون الأرجواني للتبويب المختار (نفس اللون تقريبًا في الصورة)
-const Color primaryPurple = Color(0xFF6C47E5); 
-
+const Color darkBackgroundColor = Color(0xFF1E2129);
+const Color darkAppBarColor = Color(0xFF121418);
+const Color primaryPurple = Color(0xFF6C47E5);
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -20,7 +13,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // نجعل التبويب الأول (الرئيسية) هو المختار افتراضيًا
   int _selectedIndex = 0;
 
   void _onTabSelected(int index) {
@@ -32,24 +24,22 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // 1. تعيين لون خلفية الـ Scaffold باللون الداكن
       backgroundColor: darkBackgroundColor,
-      
+
       appBar: AppBar(
         title: const Text('Custom Bottom Bar Example', style: TextStyle(color: Colors.white)),
-        backgroundColor: darkBackgroundColor, // لجعل الـ AppBar داكنًا أيضًا
-        elevation: 0, // لإزالة الظل الافتراضي للـ AppBar
+        backgroundColor: darkBackgroundColor,
+        elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
-      
+
       body: Center(
         child: Text(
           'Selected Index: $_selectedIndex',
           style: const TextStyle(fontSize: 24, color: Colors.white),
         ),
       ),
-      
-      // 2. تم حذف Theme حول bottomNavigationBar للسماح للـ Container بالتحكم في الخلفية
+
       bottomNavigationBar: CustomTabBar(
         selectedIndex: _selectedIndex,
         onTabSelected: _onTabSelected,
@@ -57,10 +47,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
-// ------------------------------------------------------------------
-// ** CustomTabBar - التعديلات لجعله عائمًا وبلون داكن واضح **
-// ------------------------------------------------------------------
 
 class CustomTabBar extends StatelessWidget {
   final int selectedIndex;
@@ -72,23 +58,21 @@ class CustomTabBar extends StatelessWidget {
     required this.onTabSelected,
   });
 
-  // تم تعديل التسميات لتطابق المثال
   final List<String> labels = const [
-    "الرئيسية", // لاحظ أن النص في الصورة "الانيسية" قد يكون خطأ مطبعي، تم تعديله إلى "الرئيسية"
+    "الرئيسية",
     "المباريات",
     "الطائرة",
-    "التفاحة",
-    "Cups",
+    "الكره",
+    "ملفي",
     "الاشتراكات",
   ];
 
-  // تم تعديل بعض الأيقونات
   final List<IconData> icons = const [
     Icons.home_outlined,
-    Icons.sports_soccer,
+    Icons.sports_score_outlined,
     Icons.flight_takeoff,
-    Icons.apple,
-    Icons.emoji_events_outlined,
+    Icons.sports_basketball,
+    Icons.person_outline_rounded,
     Icons.subscriptions,
   ];
 
@@ -97,7 +81,6 @@ class CustomTabBar extends StatelessWidget {
     final bottomPadding = MediaQuery.of(context).padding.bottom;
 
     return Container(
-      // إضافة حواف (Margin) لجعل البار عائمًا
       margin: EdgeInsets.only(
         left: 16,
         right: 16,
@@ -105,13 +88,11 @@ class CustomTabBar extends StatelessWidget {
         bottom: bottomPadding > 0 ? bottomPadding : 12,
       ),
       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 6),
-      
-      // *** 3. التعديل لجعل الخلفية داكنة صلبة ومستديرة ***
+
       decoration: BoxDecoration(
-        color: darkAppBarColor, // لون خلفية شريط التنقل
-        borderRadius: BorderRadius.circular(35), // زيادة الاستدارة
+        color: darkAppBarColor,
+        borderRadius: BorderRadius.circular(35),
         boxShadow: [
-          // إضافة ظل خفيف جدًا لجعله يبدو أكثر بروزًا
           BoxShadow(
             color: Colors.black.withOpacity(0.3),
             blurRadius: 10,
@@ -147,10 +128,6 @@ class CustomTabBar extends StatelessWidget {
   }
 }
 
-// ------------------------------------------------------------------
-// ** _TabItem - التعديلات لتطبيق اللون الأرجواني والإضاءة (Glow) **
-// ------------------------------------------------------------------
-
 class _TabItem extends StatelessWidget {
     final IconData icon;
     final String label;
@@ -166,7 +143,6 @@ class _TabItem extends StatelessWidget {
 
     @override
     Widget build(BuildContext context) {
-      // اللون للرموز غير المختارة، وهو لون رمادي فاتح تقريبًا #A0A4AE
       const Color inactiveIconColor = Color(0xFFA0A4AE);
 
       return GestureDetector(
@@ -174,22 +150,19 @@ class _TabItem extends StatelessWidget {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 250),
           curve: Curves.easeInOut,
-          // زيادة الـ padding ليتطابق مع شكل الشريط في الصورة
           padding: EdgeInsets.symmetric(
-            horizontal: isSelected ? 18 : 12, 
+            horizontal: isSelected ? 18 : 12,
             vertical: 10,
           ),
           decoration: BoxDecoration(
-            // *** التعديل 1: استخدام اللون الأرجواني للخلفية المختارة ***
-            color: isSelected ? primaryPurple : Colors.transparent, 
+            color: isSelected ? primaryPurple : Colors.transparent,
             borderRadius: BorderRadius.circular(30),
-            
-            // *** التعديل 2: إضافة الظل/الإضاءة (Glow) للتبويب المختار ***
+
             boxShadow: isSelected
                 ? [
                     BoxShadow(
-                      color: primaryPurple.withOpacity(0.4), // لون ظل بنفسجي شفاف
-                      blurRadius: 10, // نصف قطر ضبابية عالية
+                      color: primaryPurple.withOpacity(0.4),
+                      blurRadius: 10,
                       spreadRadius: 0,
                       offset: const Offset(0, 0),
                     ),
@@ -202,7 +175,6 @@ class _TabItem extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                // لون الرمز: أبيض للمختار، رمادي لغير المختار
                 color: isSelected ? Colors.white : inactiveIconColor,
                 size: 24,
               ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../main.dart'; // LayoutScreen
 
 class WelcomeScreen extends StatefulWidget {
@@ -14,6 +15,7 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen>
     with TickerProviderStateMixin {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   bool _isLoading = false;
   String? _errorMessage;
   late AnimationController _fadeController;
@@ -88,6 +90,25 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     );
   }
 
+  Future<void> _saveUserToFirestore(User user) async {
+    try {
+      final userDoc = _firestore.collection('users').doc(user.uid);
+      final docSnapshot = await userDoc.get();
+
+      if (!docSnapshot.exists) {
+        await userDoc.set({
+          'name': user.displayName ?? '',
+          'email': user.email ?? '',
+          'photoUrl': user.photoURL ?? '',
+          'accountType': 'free',
+          'createdAt': FieldValue.serverTimestamp(),
+        });
+      }
+    } catch (e) {
+      print('Error saving user to Firestore: $e');
+    }
+  }
+
   Future<void> _signInWithGoogle() async {
     try {
       setState(() {
@@ -112,7 +133,11 @@ class _WelcomeScreenState extends State<WelcomeScreen>
         idToken: googleAuth.idToken,
       );
 
-      await _auth.signInWithCredential(credential);
+      final userCredential = await _auth.signInWithCredential(credential);
+
+      if (userCredential.user != null) {
+        await _saveUserToFirestore(userCredential.user!);
+      }
 
       _navigateToHome();
     } on FirebaseAuthException catch (e) {
@@ -465,7 +490,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                                                       BorderRadius.circular(6),
                                                 ),
                                                 child: Image.network(
-                                                  'https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg',
+                                                  'https://developers.google.com/identity/images/g-logo.png',
                                                   width: 20,
                                                   height: 20,
                                                 ),
